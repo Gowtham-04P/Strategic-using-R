@@ -1,0 +1,241 @@
+<!-- R Commander Markdown Template -->
+
+gowtham 
+=======================
+
+### Mr. Royal
+
+### `r as.character(Sys.Date())`
+
+```{r echo=FALSE}
+# include this code chunk as-is to set options
+knitr::opts_chunk$set(comment=NA, prompt=TRUE, out.width=750, fig.height=8, fig.width=8)
+library(Rcmdr)
+library(car)
+library(RcmdrMisc)
+```
+
+```{r}
+Dataset <- readXL("C:/Users/Mr. Royal/Downloads/BComCA.xlsx", rownames=FALSE, header=TRUE, na="", sheet="B.COM CA",
+   stringsAsFactors=TRUE)
+```
+
+```{r}
+library(abind, pos=16)
+```
+
+
+```{r}
+library(e1071, pos=17)
+```
+
+
+
+### Numerical Summaries: Dataset
+```{r}
+numSummary(Dataset[,"X12th.Marks", drop=FALSE], statistics=c("mean", "sd", "IQR", "quantiles"), quantiles=c(0,.25,
+  .5,.75,1))
+```
+
+
+### Histogram: X12th.Marks
+```{r}
+with(Dataset, Hist(X12th.Marks, scale="frequency", breaks="Sturges", col="darkgray"))
+```
+
+
+### Numerical Summaries: Dataset
+```{r}
+numSummary(Dataset[,"PercentageMarks", drop=FALSE], statistics=c("mean", "sd", "IQR", "quantiles"), quantiles=c(0,
+  .25,.5,.75,1))
+```
+# intrepertation:
+-The Average score of the students who joined BCom CA is 65%
+-50% of the students, scored more than 65% of marks in their 12th Std.
+-Top 25% of the students scored more than 73% of marks in their 12th Std.
+
+
+
+### Histogram: PercentageMarks
+```{r}
+with(Dataset, Hist(PercentageMarks, scale="frequency", breaks="Sturges", col="darkgray"))
+```
+
+```{r}
+Dataset <- readXL("C:/Users/Mr. Royal/Downloads/BSc IT.xlsx", rownames=FALSE, header=TRUE, na="", sheet="B.SC IT", 
+  stringsAsFactors=TRUE)
+```
+
+
+### Numerical Summaries: Dataset
+```{r}
+numSummary(Dataset[,"PercentageMarks", drop=FALSE], statistics=c("mean", "sd", "IQR", "quantiles"), quantiles=c(0,
+  .25,.5,.75,1))
+```
+# Interpretation:
+
+-The Average score of the students who joined B.Sc IT is 64%
+50% of the students, scored more than 64% of marks in their 12th Std.
+Top 25% of the students scored more than 71% of marks in their 12th Std.
+ 
+
+### Histogram: PercentageMarks
+```{r}
+with(Dataset, Hist(PercentageMarks, scale="frequency", breaks="Sturges", col="darkgray"))
+```
+
+```{r}
+Dataset <- readXL("C:/Users/Mr. Royal/Downloads/CombinedITCA (1).xlsx", rownames=FALSE, header=TRUE, na="", 
+  sheet="MergedDataset", stringsAsFactors=TRUE)
+```
+
+
+### Numerical Summaries: Dataset
+```{r}
+numSummary(Dataset[,"X12th.Marks", drop=FALSE], statistics=c("mean", "sd", "IQR", "quantiles"), quantiles=c(0,.25,
+  .5,.75,1))
+```
+
+
+### Dot Plot: X12th.Marks
+```{r}
+with(Dataset, Dotplot(X12th.Marks, bin=FALSE))
+```
+
+
+### Histogram: X12th.Marks
+```{r}
+with(Dataset, Hist(X12th.Marks, scale="frequency", breaks="Sturges", col="darkgray"))
+```
+
+```{r}
+Dataset <- readXL("C:/Users/Mr. Royal/Downloads/BSc IT.xlsx", rownames=FALSE, header=TRUE, na="", sheet="B.SC IT", 
+  stringsAsFactors=TRUE)
+```
+
+
+### Numerical Summaries: Dataset
+```{r}
+numSummary(Dataset[,"X12th.Marks", drop=FALSE], groups=Dataset$Gender, statistics=c("mean", "sd", "IQR", 
+  "quantiles"), quantiles=c(0,.25,.5,.75,1))
+```
+
+
+### Histogram: X12th.Marks
+```{r}
+with(Dataset, Hist(X12th.Marks, groups=Gender, scale="frequency", breaks="Sturges", col="darkgray"))
+```
+
+
+### Numerical Summaries: Dataset
+```{r}
+numSummary(Dataset[,"X12th.Marks", drop=FALSE], groups=Dataset$PgmName, statistics=c("mean", "sd", "IQR", 
+  "quantiles"), quantiles=c(0,.25,.5,.75,1))
+```
+
+
+### Boxplot: X12th.Marks ~ PgmName
+```{r}
+Boxplot(X12th.Marks ~ PgmName, data=Dataset, id=list(method="y"))
+```
+
+
+### Plot of Means: X12th.Marks by PgmName
+```{r}
+with(Dataset, plotMeans(X12th.Marks, PgmName, error.bars="se", connect=TRUE))
+```
+
+```{r}
+Dataset <- readXL("C:/Users/Mr. Royal/Downloads/BSc IT.xlsx", rownames=FALSE, header=TRUE, na="", sheet="B.SC IT", 
+  stringsAsFactors=TRUE)
+```
+
+
+### Numerical Summaries: Dataset
+```{r}
+numSummary(Dataset[,"X12th.Marks", drop=FALSE], groups=Dataset$Gender, statistics=c("mean", "sd", "IQR", 
+  "quantiles"), quantiles=c(0,.25,.5,.75,1))
+```
+
+
+### Histogram: X12th.Marks
+```{r}
+with(Dataset, Hist(X12th.Marks, groups=Gender, scale="frequency", breaks="Sturges", col="darkgray"))
+```
+
+
+### Boxplot: X12th.Marks ~ Gender
+```{r}
+Boxplot(X12th.Marks ~ Gender, data=Dataset, id=list(method="y"))
+```
+
+
+### Plot of Means: X12th.Marks by Gender
+```{r}
+with(Dataset, plotMeans(X12th.Marks, Gender, error.bars="se", connect=TRUE))
+```
+
+```{r}
+Dataset <- readXL("C:/Users/Mr. Royal/Downloads/BComCA.xlsx", rownames=FALSE, header=TRUE, na="", sheet="B.COM CA",
+   stringsAsFactors=TRUE)
+```
+
+
+### Numerical Summaries: Dataset
+```{r}
+numSummary(Dataset[,"X12th.Marks", drop=FALSE], groups=Dataset$Gender, statistics=c("mean", "sd", "IQR", 
+  "quantiles"), quantiles=c(0,.25,.5,.75,1))
+```
+
+
+### Histogram: X12th.Marks
+```{r}
+with(Dataset, Hist(X12th.Marks, groups=Gender, scale="frequency", breaks="Sturges", col="darkgray"))
+```
+
+
+### Boxplot: X12th.Marks ~ Gender
+```{r}
+Boxplot(X12th.Marks ~ Gender, data=Dataset, id=list(method="y"))
+```
+
+
+### Plot of Means: X12th.Marks by Gender
+```{r}
+with(Dataset, plotMeans(X12th.Marks, Gender, error.bars="se", connect=TRUE))
+```
+
+```{r}
+library(colorspace, pos=18)
+```
+
+
+
+### Pie Chart: Gender
+```{r}
+with(Dataset, piechart(Gender, xlab="", ylab="", main="Gender", col=rainbow_hcl(2), scale="percent"))
+```
+
+```{r}
+Dataset <- readXL("C:/Users/Mr. Royal/Downloads/CombinedITCA (1).xlsx", rownames=FALSE, header=TRUE, na="", 
+  sheet="MergedDataset", stringsAsFactors=TRUE)
+```
+
+
+### Boxplot: X12th.Marks ~ Gender
+```{r}
+Boxplot(X12th.Marks ~ Gender, data=Dataset, id=list(method="y"))
+```
+
+
+### Independent-Samples t-Test: X12th.Marks ~ Gender
+```{r}
+t.test(X12th.Marks ~ Gender, alternative = "two.sided", conf.level = .95, var.equal = FALSE, data = Dataset)
+```
+
+
+### Pie Chart: Gender
+```{r}
+with(Dataset, piechart(Gender, xlab="", ylab="", main="Gender", col=rainbow_hcl(2), scale="percent"))
+```
+

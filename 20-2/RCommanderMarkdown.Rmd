@@ -1,0 +1,123 @@
+---
+
+output:
+  
+  html_document:
+    toc: true
+    toc_float:
+      collapsed: false
+      smooth_scroll: false
+        
+  pdf_document:
+    
+    fig_caption: true
+    fig_crop: false
+  word_document: default
+params:
+    printcode: false
+
+
+
+---
+<!-- R Commander Markdown Template -->
+
+CIA
+=======================
+
+
+### Gowtham
+
+### `r as.character(Sys.Date())`
+
+```{r echo=FALSE,include=FALSE}
+# include this code chunk as-is to set options
+knitr::opts_chunk$set(comment=NA, prompt=TRUE, out.width=750, fig.height=8, fig.width=8)
+library(Rcmdr)
+library(car)
+library(RcmdrMisc)
+```
+
+```{r}
+Dataset <- readXL("C:/Users/Mr. Royal/Downloads/BComCA (1).xlsx", rownames=FALSE, header=TRUE, na="", 
+  sheet="BComCA", stringsAsFactors=TRUE)
+```
+
+```{r}
+library(abind, pos=16)
+```
+
+
+```{r}
+library(e1071, pos=17)
+```
+
+
+
+### Numerical Summaries: Dataset
+```{r}
+numSummary(Dataset[,"Percentage", drop=FALSE], statistics=c("mean", "sd", "se(mean)", "IQR", "quantiles"), 
+  quantiles=c(0,.25,.5,.75,1))
+```
+
+```{r}
+Dataset <- readXL("C:/Users/Mr. Royal/Downloads/BScCS (1).xlsx", rownames=FALSE, header=TRUE, na="", sheet="BScCS",
+   stringsAsFactors=TRUE)
+```
+
+
+### Numerical Summaries: Dataset
+```{r}
+numSummary(Dataset[,"Percentage", drop=FALSE], statistics=c("mean", "sd", "se(mean)", "IQR", "quantiles"), 
+  quantiles=c(0,.25,.5,.75,1))
+```
+
+```{r}
+Dataset <- readXL("C:/Users/Mr. Royal/Downloads/CombinedData1 (1).xlsx", rownames=FALSE, header=TRUE, na="", 
+  sheet="BScCS-BComCA", stringsAsFactors=TRUE)
+```
+
+
+### Independent-Samples t-Test: Percentage ~ Programme
+```{r}
+t.test(Percentage ~ Programme, alternative = "two.sided", conf.level = .95, var.equal = FALSE, data = Dataset)
+```
+
+```{r}
+Dataset <- readXL("C:/Users/Mr. Royal/Downloads/BComCA (1).xlsx", rownames=FALSE, header=TRUE, na="", 
+  sheet="BComCA", stringsAsFactors=TRUE)
+```
+
+
+### Single-Sample t-Test: Percentage
+```{r}
+with(Dataset, (t.test(Percentage, alternative = "two.sided", mu = 0.0, conf.level = .95)))
+```
+
+
+### Independent-Samples t-Test: Percentage ~ Gender
+```{r}
+t.test(Percentage ~ Gender, alternative = "two.sided", conf.level = .95, var.equal = FALSE, data = Dataset)
+```
+
+```{r}
+Dataset <- readXL("C:/Users/Mr. Royal/Downloads/BScCS (1).xlsx", rownames=FALSE, header=TRUE, na="", sheet="BScCS",
+   stringsAsFactors=TRUE)
+```
+
+
+### Independent-Samples t-Test: Percentage ~ Gender
+```{r}
+t.test(Percentage ~ Gender, alternative = "two.sided", conf.level = .95, var.equal = FALSE, data = Dataset)
+```
+
+```{r}
+Dataset <- readXL("C:/Users/Mr. Royal/Downloads/CombinedData1 (1).xlsx", rownames=FALSE, header=TRUE, na="", 
+  sheet="BScCS-BComCA", stringsAsFactors=TRUE)
+```
+
+
+### Independent-Samples t-Test: Percentage ~ Gender
+```{r}
+t.test(Percentage ~ Gender, alternative = "two.sided", conf.level = .95, var.equal = FALSE, data = Dataset)
+```
+

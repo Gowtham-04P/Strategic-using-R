@@ -1,0 +1,65 @@
+
+> Dataset <- read.table("D:/stategic for r/bikeshareanalysis/raw data/bikeshare.csv", header=TRUE, 
++   stringsAsFactors=TRUE, sep="", na.strings="NA", dec=".", strip.white=TRUE)
+
+> Dataset <- read.table("D:/stategic for r/bikeshareanalysis/raw data/bikeshare.csv", header=TRUE, 
++   stringsAsFactors=TRUE, sep=",", na.strings="NA", dec=".", strip.white=TRUE)
+
+> library(abind, pos=16)
+
+> library(e1071, pos=17)
+
+> numSummary(Dataset[,"rental", drop=FALSE], statistics=c("mean", "sd", "IQR", "quantiles"), quantiles=c(0,.25,.5,
++   .75,1))
+     mean       sd IQR 0% 25%   50% 75% 100%     n
+ 420.1449 402.4735 557  0  77 315.5 634 2038 17466
+
+> with(Dataset, Hist(rental, groups=season, scale="frequency", breaks="Sturges", col="darkgray"))
+
+> local({
++   .Table <- with(Dataset, table(season))
++   cat("\ncounts:\n")
++   print(.Table)
++   cat("\npercentages:\n")
++   print(round(100*.Table/sum(.Table), 2))
++ })
+
+counts:
+season
+  fall spring summer winter 
+  4365   4407   4376   4318 
+
+percentages:
+season
+  fall spring summer winter 
+ 24.99  25.23  25.05  24.72 
+
+> library(mvtnorm, pos=18)
+
+> library(survival, pos=18)
+
+> library(MASS, pos=18)
+
+> library(TH.data, pos=18)
+
+> library(multcomp, pos=18)
+
+> AnovaModel.2 <- aov(rental ~ season, data = Dataset)
+
+> summary(AnovaModel.2)
+               Df     Sum Sq  Mean Sq F value Pr(>F)    
+season          3  192019560 64006520   423.8 <2e-16 ***
+Residuals   17462 2637047218   151016                   
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+> with(Dataset, numSummary(rental, groups = season, statistics=c('mean', 'sd')))
+           mean       sd data:n
+fall   448.1924 410.3292   4365
+spring 429.5124 409.8506   4407
+summer 546.2637 440.1982   4376
+winter 254.4187 269.8707   4318
+
+> Boxplot( ~ rental, data=Dataset, id=list(method="y"))
+ [1] "13245" "4792"  "13411" "8473"  "8306"  "14654" "16568" "7478"  "16352" "4624" 
+

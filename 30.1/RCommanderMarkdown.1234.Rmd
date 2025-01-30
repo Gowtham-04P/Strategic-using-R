@@ -1,0 +1,119 @@
+<!-- R Commander Markdown Template -->
+
+Gowtham
+=======================
+
+### Mr. Royal
+
+### `r as.character(Sys.Date())`
+
+```{r echo=FALSE}
+# include this code chunk as-is to set options
+knitr::opts_chunk$set(comment=NA, prompt=TRUE, out.width=750, fig.height=8, fig.width=8)
+library(Rcmdr)
+library(car)
+library(RcmdrMisc)
+```
+
+```{r}
+Dataset <- read.table("D:/30.1/EDA-RVS Data.csv", header=TRUE, stringsAsFactors=TRUE, sep=",", na.strings="NA", 
+  dec=".", strip.white=TRUE)
+```
+
+```{r}
+library(abind, pos=16)
+```
+
+
+```{r}
+library(e1071, pos=17)
+```
+
+
+### Numerical Summaries: Dataset
+```{r}
+numSummary(Dataset[,"X12th.Marks", drop=FALSE], groups=Dataset$Gender, statistics=c("mean", "sd", "IQR", 
+  "quantiles"), quantiles=c(0,.25,.5,.75,1))
+```
+
+
+### Histogram: X12th.Marks
+```{r}
+with(Dataset, Hist(X12th.Marks, scale="frequency", breaks="Sturges", col="darkgray"))
+```
+
+```{r}
+library(mvtnorm, pos=18)
+```
+
+
+```{r}
+library(survival, pos=18)
+```
+
+
+```{r}
+library(MASS, pos=18)
+```
+
+
+```{r}
+library(TH.data, pos=18)
+```
+
+
+```{r}
+library(multcomp, pos=18)
+```
+
+
+### One-Way Analysis of Variance: X12th.Marks ~ Gender
+```{r}
+AnovaModel.2 <- aov(X12th.Marks ~ Gender, data = Dataset)
+summary(AnovaModel.2)
+with(Dataset, numSummary(X12th.Marks, groups = Gender, statistics=c('mean', 'sd')))
+```
+
+
+### Histogram: X12th.Marks
+```{r}
+with(Dataset, Hist(X12th.Marks, groups=Gender, scale="frequency", breaks="Sturges", col="darkgray"))
+```
+
+
+### Independent-Samples t-Test: X12th.Marks ~ Gender
+```{r}
+t.test(X12th.Marks ~ Gender, alternative = "two.sided", conf.level = .95, var.equal = FALSE, data = Dataset)
+```
+
+
+### Count Missing Cases: Dataset
+```{r}
+sapply(Dataset, function(x)(sum(is.na(x)))) # NA counts
+```
+
+
+
+### Frequencies: Gender
+```{r}
+local({
+  .Table <- with(Dataset, table(Gender))
+  cat("\ncounts:\n")
+  print(.Table)
+  cat("\npercentages:\n")
+  print(round(100*.Table/sum(.Table), 2))
+})
+```
+
+
+### Table of Summary Statistics: X12th.Marks
+```{r}
+Tapply(X12th.Marks ~ Gender, mean, na.action=na.omit, data=Dataset) # mean by groups
+```
+
+
+### Boxplot: X12th.Marks ~ Gender
+```{r}
+Boxplot(X12th.Marks ~ Gender, data=Dataset, id=list(method="y"))
+```
+

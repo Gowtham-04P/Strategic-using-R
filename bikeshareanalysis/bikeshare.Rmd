@@ -1,0 +1,187 @@
+
+```{r echo=FALSE}
+# include this code chunk as-is to set options
+knitr::opts_chunk$set(comment=NA, prompt=TRUE, out.width=750, fig.height=8, fig.width=8)
+library(Rcmdr)
+library(car)
+library(RcmdrMisc)
+```
+
+```{r}
+load("C:/Users/User/Downloads/assignment-1 (1).Rmd")
+```
+
+
+```{r}
+Assignment <- readXL("C:/Users/User/Downloads/CombinedITCA.xlsx", rownames=FALSE, header=TRUE, na="", sheet="MergedDataset", stringsAsFactors=TRUE)
+```
+
+
+```{r}
+library(abind, pos=16)
+```
+
+
+```{r}
+library(e1071, pos=17)
+```
+
+
+
+### Numerical Summaries: Assignment
+```{r}
+numSummary(Assignment[,"X12th.Marks", drop=FALSE], groups=Assignment$Gender, statistics=c("mean", "sd", "IQR", "quantiles"), quantiles=c(0,.25,.5,.75,1))
+```
+
+
+### Single-Sample t-Test: X12th.Marks
+```{r}
+with(Assignment, (t.test(X12th.Marks, alternative = "two.sided", mu = 0.0, conf.level = .95)))
+```
+
+
+### Independent-Samples t-Test: X12th.Marks ~ Gender
+```{r}
+t.test(X12th.Marks ~ Gender, alternative = "two.sided", conf.level = .95, var.equal = FALSE, data = Assignment)
+```
+
+
+### Boxplot: X12th.Marks ~ Gender
+```{r}
+Boxplot(X12th.Marks ~ Gender, data=Assignment, id=list(method="y"))
+```
+
+
+### Numerical Summaries: Assignment
+```{r}
+numSummary(Assignment[,"X12th.Marks", drop=FALSE], groups=Assignment$Gender, statistics=c("mean", "sd", "IQR", "quantiles"), quantiles=c(0,.25,.5,.75,1))
+```
+
+
+### Linear Model: RegModel.1: X12th.Marks~PercentageMarks
+```{r}
+RegModel.1 <- lm(X12th.Marks~PercentageMarks, data=Assignment)
+summary(RegModel.1)
+```
+
+
+### Frequencies: Gender
+```{r}
+local({
+  .Table <- with(Assignment, table(Gender))
+  cat("\ncounts:\n")
+  print(.Table)
+  cat("\npercentages:\n")
+  print(round(100*.Table/sum(.Table), 2))
+})
+```
+
+
+### Correlation Test: PercentageMarks, X12th.Marks
+```{r}
+with(Assignment, cor.test(PercentageMarks, X12th.Marks, alternative="two.sided", method="pearson"))
+```
+
+
+### Frequencies: Board, Gender
+```{r}
+local({
+  .Table <- with(Assignment, table(Board))
+  cat("\ncounts:\n")
+  print(.Table)
+  cat("\npercentages:\n")
+  print(round(100*.Table/sum(.Table), 2))
+})
+local({
+  .Table <- with(Assignment, table(Gender))
+  cat("\ncounts:\n")
+  print(.Table)
+  cat("\npercentages:\n")
+  print(round(100*.Table/sum(.Table), 2))
+})
+```
+
+
+### Linear Model: RegModel.2: X12th.Marks~PercentageMarks
+```{r}
+RegModel.2 <- lm(X12th.Marks~PercentageMarks, data=Assignment)
+summary(RegModel.2)
+```
+
+
+### Chi-Squared Quantiles
+```{r}
+qchisq(c(0.05), df=95, lower.tail=TRUE)
+```
+
+
+
+### Table of Summary Statistics: PercentageMarks
+```{r}
+Tapply(PercentageMarks ~ Gender, mean, na.action=na.omit, data=Assignment) # mean by groups
+```
+
+
+
+### Table of Summary Statistics: PercentageMarks
+```{r}
+Tapply(PercentageMarks ~ Gender, median, na.action=na.omit, data=Assignment) # median by groups
+```
+
+
+
+### Table of Summary Statistics: PercentageMarks
+```{r}
+Tapply(PercentageMarks ~ Gender, sd, na.action=na.omit, data=Assignment) # sd by groups
+```
+
+
+
+### Table of Summary Statistics: PercentageMarks
+```{r}
+Tapply(PercentageMarks ~ Gender, var, na.action=na.omit, data=Assignment) # var by groups
+```
+
+
+
+### Table of Summary Statistics: PercentageMarks
+```{r}
+Tapply(PercentageMarks ~ Gender, CV, na.action=na.omit, data=Assignment) # CV by groups
+```
+
+
+
+### Table of Summary Statistics: PercentageMarks
+```{r}
+Tapply(PercentageMarks ~ Board, mean, na.action=na.omit, data=Assignment) # mean by groups
+```
+
+
+
+### Table of Summary Statistics: PercentageMarks
+```{r}
+Tapply(PercentageMarks ~ Board, median, na.action=na.omit, data=Assignment) # median by groups
+```
+
+
+
+### Table of Summary Statistics: PercentageMarks
+```{r}
+Tapply(PercentageMarks ~ Board, sd, na.action=na.omit, data=Assignment) # sd by groups
+```
+
+
+
+### Table of Summary Statistics: PercentageMarks
+```{r}
+Tapply(PercentageMarks ~ Board, var, na.action=na.omit, data=Assignment) # var by groups
+```
+
+
+
+### Table of Summary Statistics: PercentageMarks
+```{r}
+Tapply(PercentageMarks ~ Board, CV, na.action=na.omit, data=Assignment) # CV by groups
+```
+
+
